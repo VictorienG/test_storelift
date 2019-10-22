@@ -1,6 +1,5 @@
-import crud
-from store_app import app
+from databases import crud
 
 if __name__ == "__main__":
     #app.run(debug=True)
-    crud.run()
+    crud.pipeline_create_databases()
