@@ -27,19 +27,24 @@ fill_customer = [
 fill_product = [
     Product(
         name="Evian 50 cL",
-        brand="Evian"
+        brand="Evian",
+        unit_price=0.56,
+
     ),
     Product(
         name="Evian 1L",
-        brand="Evian"
+        brand="Evian",
+        unit_price=1
     ),
     Product(
         name="Lait 50 cL",
-        brand="Lactel"
+        brand="Lactel",
+        unit_price=0.59
     ),
     Product(
         name="KitKat paquet de 6",
-        brand="Nestlé"
+        brand="Nestlé",
+        unit_price=1.59
     ),
 ]
 
@@ -47,37 +52,31 @@ fill_stock = [
     Stock(
         id_store=1,
         id_prod=1,
-        unit_price=0.56,
         quantity=8
     ),
     Stock(
         id_store=1,
         id_prod=2,
-        unit_price=1,
         quantity=8)
     ,
     Stock(
         id_store=1,
         id_prod=3,
-        unit_price=0.59,
         quantity=12
     ),
     Stock(
         id_store=2,
         id_prod=2,
-        unit_price=1,
         quantity=6
     ),
     Stock(
         id_store=2,
         id_prod=4,
-        unit_price=1.50,
         quantity=2000
     ),
     Stock(
         id_store=2,
         id_prod=3,
-        unit_price=0.59,
         quantity=1
     ),
 ]

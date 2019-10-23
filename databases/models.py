@@ -28,23 +28,23 @@ class Customer(Base):
 class Product(Base):
     __tablename__ = 'product'
     id_product = Column(Integer, primary_key=True)
-    name = Column(String(30))
+    name = Column(String(30), unique=True)
     brand = Column(String(60))
+    unit_price = Column(Float, nullable=False)
 
     def __repr__(self):
-        return "<Product(name={}, brand={})>".format(self.name, self.brand)
+        return "<Product(name={}, brand={}, unit_price={})>".format(self.name, self.brand, self.unit_price)
 
 
 class Stock(Base):
     __tablename__ = 'stock'
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
     id_prod = Column(Integer, ForeignKey('product.id_product', ondelete='CASCADE'), primary_key=True)
-    unit_price = Column(Float, nullable=False)
     quantity = Column(Integer, nullable=False)
     supplying = Column(Boolean, default=False)
 
     def __repr__(self):
-        return "<Stock(unit_price={}, quantity={}, supplying={}>".format(self.unit_price, self.quantity, self.supplying)
+        return "<Stock(quantity={}, supplying={}>".format(self.quantity, self.supplying)
 
 
 class IsInStore(Base):
@@ -55,7 +55,6 @@ class IsInStore(Base):
 
     def __repr__(self):
         return "<IsInStore(is_in={})>".format(self.is_in)
-
 
 
 class Buying(Base):
