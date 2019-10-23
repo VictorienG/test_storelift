@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Date, Boolean, Float, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, Boolean, Float, ForeignKey, and_
 
 Base = declarative_base()
 
@@ -17,7 +17,7 @@ class Store(Base):
 class Customer(Base):
     __tablename__ = 'customer'
     id_customer = Column(Integer, primary_key=True)
-    mail = Column(String)
+    mail = Column(String, default=None)
     last_name = Column(String(15))
     first_name = Column(String(15))
 
@@ -55,6 +55,7 @@ class IsInStore(Base):
 
     def __repr__(self):
         return "<IsInStore(is_in={})>".format(self.is_in)
+
 
 
 class Buying(Base):

@@ -7,6 +7,7 @@ from databases.models import Base
 
 engine = create_engine(DATABASE_URI)
 Session = sessionmaker(bind=engine)
+s = Session()
 
 
 def recreate_database():
@@ -23,7 +24,6 @@ def init_databases():
     Fill all tables in the database created in the recreated_database function
     :return: A filled database
     """
-    s = Session()
     s.bulk_save_objects(fill_store)
     s.bulk_save_objects(fill_customer)
     s.bulk_save_objects(fill_product)
