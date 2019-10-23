@@ -1,6 +1,7 @@
 from databases import crud
 from databases.course import take_product, return_product
 from databases.entrance import entrance
+from databases.exit import compute_total_price
 
 if __name__ == "__main__":
     # app.run(debug=True)
@@ -10,7 +11,10 @@ if __name__ == "__main__":
     take_product(1, 2, "evian 50 cl", "evian")
     take_product(1, 2, "evian 50 cl", "evian")
     take_product(1, 2, "evian 50 cl", "evian")
+    take_product(1,2, "KitKat paquet de 6", "Nestle")
     return_product(1, 2, "evian 50 cl", "evian")
+    compute_total_price(1, 2)
+
 
 
 

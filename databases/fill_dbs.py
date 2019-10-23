@@ -43,7 +43,7 @@ fill_product = [
     ),
     Product(
         name="KitKat paquet de 6",
-        brand="Nestlé",
+        brand="Nestle",
         unit_price=1.59
     ),
 ]
