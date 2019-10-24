@@ -19,7 +19,6 @@ def create_customer(last_name, first_name, mail=None):
             Customer.first_name.ilike(first_name)
         )
     ).all()
-
     if len(id_customer) == 0:
         new_customer = Customer(mail=mail, last_name=last_name, first_name=first_name)
         s.add(new_customer)
@@ -58,13 +57,17 @@ def customer_in_the_store(id_store, id_customer):
 
 def entrance(id_store, last_name, first_name, mail=None):
     """
-    Orchestrate all changements in the database when a customer goes into a store.
+    Orchestrate all changements in the database when a customer goes into a store. The fucntion returns the customer's
+    id.
 
     :param Integer id_store: The id of the store
     :param string last_name: The last_name of the customer
     :param string first_name:  The customer's last name
     :param string mail: The mail of the customer
-    :return: None
+    :return: The customer's id
+    :rtype: int
     """
     id_customer = create_customer(last_name, first_name, mail)
     customer_in_the_store(id_store, id_customer)
+
+    return id_customer

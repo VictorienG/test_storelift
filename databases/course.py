@@ -20,6 +20,7 @@ def find_id_product(name_product, brand):
         )
     ).all()
     s.close
+
     return id_product[0]
 
 
