@@ -90,6 +90,7 @@ def delete_purchases_customer(id_store, id_customer):
         )
     ).delete()
     s.commit()
+    s.close()
 
 
 def change_to_false_in_is_in_store(id_store, id_customer):

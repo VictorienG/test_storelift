@@ -77,7 +77,6 @@ def take_product(id_store, id_customer, name_product, brand):
         same_buying(id_store, id_customer, id_product)
     except:
         new_buying(id_store, id_customer, id_product, unit_price)
-    pass
 
 
 def return_product(id_store, id_customer, name_product, brand):
@@ -101,4 +100,4 @@ def return_product(id_store, id_customer, name_product, brand):
     change_quantity_product.quantity = change_quantity_product.quantity - 1
     s.commit()
     s.close()
-    pass
+

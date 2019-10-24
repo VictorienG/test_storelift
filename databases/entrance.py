@@ -7,11 +7,11 @@ def create_customer(last_name, first_name, mail=None):
     """
     Check if the customer who enter is a new customer. In this case, a new customer is created in the Customer table.
 
-    :param string last_name: The last_name of the customer
-    :param string first_name:  The customer's last name
-    :param string mail: The mail of the customer
+    :param str last_name: The last_name of the customer
+    :param str first_name:  The customer's last name
+    :param str mail: The mail of the customer
     :return: The id of the customer
-    :rtype: Integer
+    :rtype: str
     """
     id_customer = s.query(Customer).with_entities(Customer.id_customer).filter(
         and_(
