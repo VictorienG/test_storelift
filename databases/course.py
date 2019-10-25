@@ -87,10 +87,10 @@ def take_product(id_store, id_customer, name_product, brand):
     """
     Orchestrates all actions when a customer takes a product.
 
-    :param Integer id_store: The id of the store where the customer is entered
-    :param Integer id_customer: The id of the customer.
-    :param String name_product: Name of the detected product
-    :param String brand: Brand of the detected product
+    :param int id_store: The id of the store where the customer is entered
+    :param int id_customer: The id of the customer.
+    :param str name_product: Name of the detected product
+    :param str brand: Brand of the detected product
     :return: None
     """
     (id_product, unit_price) = find_id_product(name_product, brand)
@@ -104,10 +104,10 @@ def return_product(id_store, id_customer, name_product, brand):
     """
         Orchestrates all actions when a customer returns a product.
 
-        :param Integer id_store: The id of the store where the customer is entered
-        :param Integer id_customer: The id of the customer.
-        :param String name_product: Name of the detected product
-        :param String brand: Brand of the detected product
+        :param int id_store: The id of the store where the customer is entered
+        :param int id_customer: The id of the customer.
+        :param str name_product: Name of the detected product
+        :param str brand: Brand of the detected product
         :return:
     """
     (id_product, _) = find_id_product(name_product, brand)
