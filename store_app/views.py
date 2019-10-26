@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 
-from databases.course import take_product, return_product
+from databases.purchases import take_product, return_product
 from databases.entrance import entrance
 from databases.exit import leave_the_store
 from databases.get_data import get_stores, get_products_from_store, get_products_from_customer

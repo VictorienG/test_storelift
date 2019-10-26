@@ -3,7 +3,7 @@ from unittest.mock import patch, call
 
 from sqlalchemy import and_
 
-from databases.course import take_product
+from databases.purchases import take_product
 from databases.crud import s, pipeline_create_databases
 from databases.entrance import entrance
 from databases.exit import change_stock, compute_total_price, put_in_history, delete_purchases_customer, \
@@ -39,8 +39,8 @@ class TestExit(TestCase):
         # Given
         id_store = 2
         id_customer = entrance(id_store, "Gimenez", "Victorien")
-        take_product(id_store, id_customer, "evian 1l", "evian")
-        take_product(id_store, id_customer, "evian 1l", "evian")
+        take_product(id_store, id_customer, "evian 1l")
+        take_product(id_store, id_customer, "evian 1l")
 
         price_evian_1l = 1
         quantity_evian_1l = 2
@@ -60,8 +60,8 @@ class TestExit(TestCase):
         pipeline_create_databases()
         id_store = 2
         id_customer = entrance(id_store, "Gimenez", "Victorien")
-        take_product(id_store, id_customer, "evian 1l", "evian")
-        take_product(id_store, id_customer, "KitKat paquet de 6", "Nestle")
+        take_product(id_store, id_customer, "evian 1l")
+        take_product(id_store, id_customer, "KitKat paquet de 6")
 
         expected_rows = 2
 
@@ -78,8 +78,8 @@ class TestExit(TestCase):
         pipeline_create_databases()
         id_store = 2
         id_customer = entrance(id_store, "Gimenez", "Victorien")
-        take_product(id_store, id_customer, "evian 1l", "evian")
-        take_product(id_store, id_customer, "KitKat paquet de 6", "Nestle")
+        take_product(id_store, id_customer, "evian 1l")
+        take_product(id_store, id_customer, "KitKat paquet de 6")
 
         expected_rows = 0
 

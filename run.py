@@ -1,5 +1,5 @@
 from databases import crud
-from databases.course import take_product, return_product
+from databases.purchases import take_product, return_product
 from databases.crud import s
 from databases.entrance import entrance
 from databases.exit import leave_the_store
