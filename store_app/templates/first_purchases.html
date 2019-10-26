@@ -1,0 +1,26 @@
+<form name="buy_products" action="\buy_or_return_purchases" method="POST", enctype="multipart/form-data">
+
+<p>
+   Produit pris  :<br />
+   <select id="produit" name="produit">
+       {% for products in data %}
+       <option value="{{products[1]}}">{{products[1]}}</option>
+
+       {% endfor %}
+
+   </select>
+</p>
+<p>
+   Nombre de produits  :<br />
+   <select name="quantite">
+      <option value=1> 1 </option>
+      <option value=2 > 2 </option>
+      <option value=3> 3 </option>
+   </select>
+</p>
+
+<p>
+   <input type="submit" name = "Valider" value="Valider achat" />
+   <input type="reset" value="Annuler" />
+</p>
+</form>

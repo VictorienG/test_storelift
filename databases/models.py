@@ -43,12 +43,16 @@ class Stock(Base):
     __tablename__ = 'stock'
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
     id_prod = Column(Integer, ForeignKey('product.id_product', ondelete='CASCADE'), primary_key=True)
+    name_product = Column(String(30))
     quantity = Column(Integer, nullable=False)
     supplying = Column(Boolean, default=False)
 
     def __repr__(self):
-        return "<Stock(id_store={}, id_prod={}, quantity={}, supplying={}>".format(self.id_store, self.id_prod,
-                                                                                   self.quantity, self.supplying)
+        return "<Stock(id_store={}, id_prod={}, name_product={}, quantity={}, supplying={}>".format(self.id_store,
+                                                                                                    self.id_prod,
+                                                                                                    self.name_product,
+                                                                                                    self.quantity,
+                                                                                                    self.supplying)
 
 
 class IsInStore(Base):
@@ -66,12 +70,13 @@ class Buying(Base):
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
     id_customer = Column(Integer, ForeignKey('customer.id_customer', ondelete='CASCADE'), primary_key=True)
     id_prod = Column(Integer, ForeignKey('product.id_product', ondelete='SET NULL'), primary_key=True)
+    name_product = Column(String(30))
     quantity = Column(Integer)
     unit_price = Column(Float)
 
     def __repr__(self):
-        return "<Buying(id_store={}, id_customer={}, id_prod={}, quantity={}, unit_price={})>".format(
-            self.id_store, self.id_customer, self.id_customer, self.quantity, self.unit_price)
+        return "<Buying(id_store={}, id_customer={}, id_prod={}, name_product={}, quantity={}, unit_price={})>".format(
+            self.id_store, self.id_customer, self.id_customer, self.name_product, self.quantity, self.unit_price)
 
 
 class HistoryCustomer(Base):

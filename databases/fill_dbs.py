@@ -52,31 +52,37 @@ fill_stock = [
     Stock(
         id_store=1,
         id_prod=1,
+        name_product="Evian 50 cL",
         quantity=8
     ),
     Stock(
         id_store=1,
+        name_product="Evian 1L",
         id_prod=2,
         quantity=8)
     ,
     Stock(
         id_store=1,
         id_prod=3,
+        name_product="Lait 50 cL",
         quantity=12
     ),
     Stock(
         id_store=2,
         id_prod=2,
+        name_product="Evian 1L",
         quantity=6
     ),
     Stock(
         id_store=2,
         id_prod=4,
+        name_product="KitKat paquet de 6",
         quantity=2000
     ),
     Stock(
         id_store=2,
         id_prod=3,
+        name_product="Lait 50 cL",
         quantity=1
     ),
 ]

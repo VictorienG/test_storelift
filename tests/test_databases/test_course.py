@@ -14,14 +14,13 @@ class TestCourse(TestCase):
         # Given
         pipeline_create_databases()
         product = s.query(Product).first()
-        brand_product = product.brand
         name_product = product.name
         expected_unit_price = product.unit_price
         expected_id_product = 1
         s.close()
 
         # Then
-        id_product, unit_price = find_id_product(name_product, brand_product)
+        id_product, unit_price = find_id_product(name_product)
 
         # When
         self.assertEqual(expected_id_product, id_product)
@@ -108,7 +107,6 @@ class TestCourse(TestCase):
     @patch("databases.course.find_id_product")
     def test_take_product_try(self, mock_id_product, mock_same_product):
         # Given
-        brand_product = "B"
         name_product = "A"
         id_store = 1
         id_customer = 1
@@ -118,17 +116,16 @@ class TestCourse(TestCase):
         mock_id_product.return_value = id_product, unit_price
 
         # When
-        _ = take_product(id_store, id_customer, name_product, brand_product)
+        _ = take_product(id_store, id_customer, name_product)
 
         # Then
-        mock_id_product.assert_called_once_with(name_product, brand_product)
+        mock_id_product.assert_called_once_with(name_product)
         mock_same_product.assert_called_once_with(id_store, id_customer, id_product)
 
     @patch("databases.course.new_buying")
     @patch("databases.course.find_id_product")
     def test_take_product_except(self, mock_id_product, mock_new_product):
         # Given
-        brand_product = "B"
         name_product = "A"
         id_store = 10
         id_customer = 1
@@ -138,10 +135,10 @@ class TestCourse(TestCase):
         mock_id_product.return_value = id_product, unit_price
 
         # When
-        _ = take_product(id_store, id_customer, name_product, brand_product)
+        _ = take_product(id_store, id_customer, name_product)
 
         # Then
-        mock_id_product.assert_called_once_with(name_product, brand_product)
+        mock_id_product.assert_called_once_with(name_product)
         mock_new_product.assert_called_once_with(id_store, id_customer, id_product, unit_price)
 
     @patch("databases.course.put_product_in_store")
@@ -151,15 +148,14 @@ class TestCourse(TestCase):
         id_store = 1
         id_customer = 1
         name_product = "A"
-        brand = "B"
 
         id_product = 1
         unit_price = 1
         mock_id_product.return_value = id_product, unit_price
 
         # When
-        _ = return_product(id_store, id_customer, name_product, brand)
+        _ = return_product(id_store, id_customer, name_product)
 
         # Then
-        mock_id_product.assert_called_once_with(name_product, brand)
+        mock_id_product.assert_called_once_with(name_product)
         mock_put_product.assert_called_once_with(id_store, id_customer, id_product)
