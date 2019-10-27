@@ -6,6 +6,8 @@ Base = declarative_base()
 
 class Store(Base):
     __tablename__ = 'store'
+    __table_args__={'schema': 'test'}
+
     id_store = Column(Integer, primary_key=True)
     address = Column(String(100), nullable=False)
     name_store = Column(String(50))
@@ -16,6 +18,8 @@ class Store(Base):
 
 class Customer(Base):
     __tablename__ = 'customer'
+    __table_args__={'schema': 'test'}
+
     id_customer = Column(Integer, primary_key=True)
     mail = Column(String, default=None)
     last_name = Column(String(15))
@@ -29,6 +33,8 @@ class Customer(Base):
 
 class Product(Base):
     __tablename__ = 'product'
+    __table_args__={'schema': 'test'}
+
     id_product = Column(Integer, primary_key=True)
     name = Column(String(30), unique=True)
     brand = Column(String(60))
@@ -41,6 +47,8 @@ class Product(Base):
 
 class Stock(Base):
     __tablename__ = 'stock'
+    __table_args__={'schema': 'test'}
+
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
     id_prod = Column(Integer, ForeignKey('product.id_product', ondelete='CASCADE'), primary_key=True)
     name_product = Column(String(30))
@@ -57,6 +65,8 @@ class Stock(Base):
 
 class IsInStore(Base):
     __tablename__ = 'is_in_store'
+    __table_args__={'schema': 'test'}
+
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
     id_customer = Column(Integer, ForeignKey('customer.id_customer', ondelete='CASCADE'), primary_key=True)
     is_in = Column(Boolean, default=False)
@@ -67,6 +77,8 @@ class IsInStore(Base):
 
 class Buying(Base):
     __tablename__ = 'buying'
+    __table_args__={'schema': 'test'}
+
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
     id_customer = Column(Integer, ForeignKey('customer.id_customer', ondelete='CASCADE'), primary_key=True)
     id_prod = Column(Integer, ForeignKey('product.id_product', ondelete='SET NULL'), primary_key=True)
@@ -81,6 +93,8 @@ class Buying(Base):
 
 class HistoryCustomer(Base):
     __tablename__ = 'history_customer'
+    __table_args__={'schema': 'test'}
+
     date = Column(DateTime, primary_key=True)
     id_customer = Column(Integer, ForeignKey('customer.id_customer', ondelete='CASCADE'), primary_key=True)
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
