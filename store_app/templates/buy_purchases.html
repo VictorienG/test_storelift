@@ -1,19 +1,38 @@
-<form name="buy_products" action="\buy_or_return_purchases" method="POST", enctype="multipart/form-data">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Victorien Gimenez">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>Test Storelift</title>
+</head>
+<body>
+<div class="container">
+    <form id="contact" name="buy_products" action="\buy_or_return_purchases" method="POST", enctype="multipart/form-data">
+          enctype="multipart/form-data">
+        <h3>Storelift</h3>
+        <h4>Que voulez_vous acheter?</h4>
+        <fieldset>
+            Produit pris :<br/>
+            <select id="produit" name="produit">
+                {% for products in data %}
+                <option value="{{products[1]}}">{{products[1]}}</option>
+                {% endfor %}
+            </select>
+        </fieldset>
+        <fieldset>
+            <input type="submit" name="Valider" value="Valider achat"/>
+            <input type="reset" value="Annuler"/>
+        </fieldset>
+    </form>
+</div>
 
-<p>
-   Produit pris  :<br />
-   <select id="produit" name="produit">
-       {% for products in data %}
-       <option value="{{products[1]}}">{{products[1]}}</option>
 
-       {% endfor %}
-
-   </select>
-</p>
+</body>
+</html>
 
 
-<p>
-   <input type="submit" name="Valider" value="Valider achat" />
-   <input type="reset" value="Annuler" />
-</p>
-</form>
+
+
+
+

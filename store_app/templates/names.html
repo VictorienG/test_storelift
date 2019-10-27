@@ -1,29 +1,51 @@
-<form name="names" action="\first_purchases" method="POST" , enctype="multipart/form-data">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Victorien Gimenez">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>Test Storelift</title>
+</head>
+<body>
+<div class="container">
+    <form id="contact" name="names" action="\first_purchases" method="POST" , enctype="multipart/form-data">
+        <h3>Storelift</h3>
+        <h4>Qui êtes-vous ?</h4>
+        <fieldset>
+            Votre prénom :<br/>
+            <input type="text" name="prenom" value="" required/>
+        </fieldset>
+        <fieldset>
+            Votre nom :<br/>
+            <input type="text" name="nom" value="" required/>
+        </fieldset>
+        <fieldset>
+            Votre mail :<br/>
+            <input type="email" name="mail" value=""/>
+        </fieldset>
+        <fieldset>
+            Magasin :<br/>
+            {% for store in data %}
+            <input type="radio" name="store" value="{{store[1]}}" required/> {{store[0]}}
+            {% endfor %}
+        </fieldset>
 
-    <p>
-        Votre prénom :<br/>
-        <input type="text" name="prenom" value=""/>
-    </p>
 
-    <p>
-        Votre nom :<br/>
-        <input type="text" name="nom" value=""/>
-    </p>
+        <fieldset>
+            <input type="submit" value="Envoyer"/>
+            <input type="reset" value="Annuler"/>
+        </fieldset>
+        <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>
+        </p>
+    </form>
+</div>
 
-    <p>
-        Votre mail :<br/>
-        <input type="email" name="mail" value=""/>
-    </p>
 
-    <p>
-        Magasin :<br/>
-        {% for store in data %}
-        <input type="radio" name="store" value="{{store[1]}}"/> {{store[0]}}
-        {% endfor %}
-    </p>
+</body>
+</html>
 
-    <p>
-        <input type="submit" value="Envoyer"/>
-        <input type="reset" value="Annuler"/>
-    </p>
-</form>
+
+
+
+
+
