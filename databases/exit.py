@@ -1,11 +1,10 @@
 from sqlalchemy import and_
 
-from databases.crud import s
 from databases.models import Stock, IsInStore, Buying, HistoryCustomer
 from datetime import datetime
 
 
-def change_stock(id_store, id_product, quantity_bought):
+def change_stock(s, id_store, id_product, quantity_bought):
     """
     Change the stock of the store for a product and a given quantity.
 
@@ -25,7 +24,7 @@ def change_stock(id_store, id_product, quantity_bought):
     s.close()
 
 
-def compute_total_price(id_store, id_customer):
+def compute_total_price(s, id_store, id_customer):
     """
     Compute the total price for a customer and return all products bought with their corresponding quantity.
 
@@ -50,7 +49,7 @@ def compute_total_price(id_store, id_customer):
     return total_price, products_bought
 
 
-def put_in_history(id_store, id_customer):
+def put_in_history(s, id_store, id_customer):
     """
     Put all purchases of the customer in the history_customers table
 
@@ -75,7 +74,7 @@ def put_in_history(id_store, id_customer):
     s.close
 
 
-def delete_purchases_customer(id_store, id_customer):
+def delete_purchases_customer(s, id_store, id_customer):
     """
     Delete all lines in the buying table for the (id_store, id_customer) table
 
@@ -93,7 +92,7 @@ def delete_purchases_customer(id_store, id_customer):
     s.close()
 
 
-def change_to_false_in_is_in_store(id_store, id_customer):
+def change_to_false_in_is_in_store(s, id_store, id_customer):
     """
     Change to false the is_in value for a given id_store and a given id_customer.
 
@@ -113,7 +112,7 @@ def change_to_false_in_is_in_store(id_store, id_customer):
     s.close()
 
 
-def leave_the_store(id_store, id_customer):
+def leave_the_store(s, id_store, id_customer):
     """
     Orchestrate all action when the client live the score and return the total price of his purchases
 
@@ -122,11 +121,11 @@ def leave_the_store(id_store, id_customer):
     :return: Total price of purchases
     :rtype: float
     """
-    total_price, purchases = compute_total_price(id_store, id_customer)
+    total_price, purchases = compute_total_price(s, id_store, id_customer)
     for id_product, quantity in purchases:
-        change_stock(id_store, id_product, quantity)
-    put_in_history(id_store, id_customer)
-    delete_purchases_customer(id_store, id_customer)
-    change_to_false_in_is_in_store(id_store, id_customer)
+        change_stock(s, id_store, id_product, quantity)
+    put_in_history(s, id_store, id_customer)
+    delete_purchases_customer(s, id_store, id_customer)
+    change_to_false_in_is_in_store(s, id_store, id_customer)
 
     return total_price

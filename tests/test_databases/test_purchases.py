@@ -5,14 +5,15 @@ from sqlalchemy import and_
 
 from databases.purchases import find_id_product, same_buying, new_buying, take_product, return_product, \
     put_product_in_store
-from databases.crud import s, pipeline_create_databases
+
 from databases.models import Product, Buying
+from tests.test_databases.crud_test import pipeline_create_databases_test, s
 
 
 class TestPurchases(TestCase):
     def test_find_id_product(self):
         # Given
-        pipeline_create_databases()
+        pipeline_create_databases_test()
         product = s.query(Product).first()
         name_product = product.name
         expected_unit_price = product.unit_price
@@ -20,7 +21,7 @@ class TestPurchases(TestCase):
         s.close()
 
         # Then
-        id_product, unit_price = find_id_product(name_product)
+        id_product, unit_price = find_id_product(s, name_product)
 
         # When
         self.assertEqual(expected_id_product, id_product)
@@ -29,7 +30,7 @@ class TestPurchases(TestCase):
 
     def test_new_buying(self):
         # Given
-        pipeline_create_databases()
+        pipeline_create_databases_test()
         id_store = 1
         product = s.query(Product).first()
         id_product = product.id_product
@@ -42,7 +43,7 @@ class TestPurchases(TestCase):
         s.close()
 
         # When
-        _ = new_buying(id_store, id_customer, id_product, name, unit_price)
+        _ = new_buying(s, id_store, id_customer, id_product, name, unit_price)
 
         # Then
         rows = s.query(Buying).count()
@@ -60,7 +61,7 @@ class TestPurchases(TestCase):
 
     def test_same_buying(self):
         # Given
-        pipeline_create_databases()
+        pipeline_create_databases_test()
         id_store = 1
         product = s.query(Product).first()
         id_product = product.id_product
@@ -68,10 +69,10 @@ class TestPurchases(TestCase):
         id_customer = 1
         expected_quantity = 2
         unit_price = 1
-        new_buying(id_store, id_customer, id_product, name, unit_price)
+        new_buying(s, id_store, id_customer, id_product, name, unit_price)
 
         # When
-        _ = same_buying(id_store, id_customer, id_product)
+        _ = same_buying(s, id_store, id_customer, id_product)
 
         # Then
         quantity = s.query(Buying).filter(
@@ -85,7 +86,7 @@ class TestPurchases(TestCase):
         self.assertEqual(expected_quantity, quantity)
 
     def test_put_product_in_store(self):
-        pipeline_create_databases()
+        pipeline_create_databases_test()
         id_store = 1
         product = s.query(Product).first()
         id_product = product.id_product
@@ -93,10 +94,10 @@ class TestPurchases(TestCase):
         id_customer = 1
         expected_quantity = 0
         unit_price = 1
-        new_buying(id_store, id_customer, id_product, name, unit_price)
+        new_buying(s, id_store, id_customer, id_product, name, unit_price)
 
         # When
-        _ = put_product_in_store(id_store, id_customer, id_product)
+        _ = put_product_in_store(s, id_store, id_customer, id_product)
 
         # Then
         quantity = s.query(Buying).filter(
@@ -122,11 +123,11 @@ class TestPurchases(TestCase):
         mock_id_product.return_value = id_product, unit_price
 
         # When
-        _ = take_product(id_store, id_customer, name_product)
+        _ = take_product(s, id_store, id_customer, name_product)
 
         # Then
-        mock_id_product.assert_called_once_with(name_product)
-        mock_same_product.assert_called_once_with(id_store, id_customer, id_product)
+        mock_id_product.assert_called_once_with(s, name_product)
+        mock_same_product.assert_called_once_with(s, id_store, id_customer, id_product)
 
     @patch("databases.purchases.new_buying")
     @patch("databases.purchases.find_id_product")
@@ -141,11 +142,11 @@ class TestPurchases(TestCase):
         mock_id_product.return_value = id_product, unit_price
 
         # When
-        _ = take_product(id_store, id_customer, name_product)
+        _ = take_product(s, id_store, id_customer, name_product)
 
         # Then
-        mock_id_product.assert_called_once_with(name_product)
-        mock_new_product.assert_called_once_with(id_store, id_customer, id_product, name_product, unit_price)
+        mock_id_product.assert_called_once_with(s, name_product)
+        mock_new_product.assert_called_once_with(s, id_store, id_customer, id_product, name_product, unit_price)
 
     @patch("databases.purchases.put_product_in_store")
     @patch("databases.purchases.find_id_product")
@@ -160,8 +161,8 @@ class TestPurchases(TestCase):
         mock_id_product.return_value = id_product, unit_price
 
         # When
-        _ = return_product(id_store, id_customer, name_product)
+        _ = return_product(s, id_store, id_customer, name_product)
 
         # Then
-        mock_id_product.assert_called_once_with(name_product)
-        mock_put_product.assert_called_once_with(id_store, id_customer, id_product)
+        mock_id_product.assert_called_once_with(s, name_product)
+        mock_put_product.assert_called_once_with(s, id_store, id_customer, id_product)

@@ -3,15 +3,15 @@ from unittest.mock import patch
 
 from sqlalchemy import and_
 
-from databases.crud import s, recreate_database, pipeline_create_databases
 from databases.entrance import create_customer, customer_in_the_store, entrance
 from databases.models import Customer, IsInStore
+from tests.test_databases.crud_test import pipeline_create_databases_test, s
 
 
 class TestEntrance(TestCase):
     def test_create_customer(self):
         # Given
-        pipeline_create_databases()
+        pipeline_create_databases_test()
         last_name = "B"
         first_name = "A"
         expected_new_id = s.query(Customer).count() + 1
@@ -20,8 +20,8 @@ class TestEntrance(TestCase):
         expected_id_fist_customer = 1
 
         # When
-        _ = create_customer(last_name, first_name)
-        id_first_customer = create_customer(first_customer.last_name, first_customer.first_name)
+        _ = create_customer(s, last_name, first_name)
+        id_first_customer = create_customer(s, first_customer.last_name, first_customer.first_name)
 
         # Then
         id_new_customer = s.query(Customer).with_entities(Customer.id_customer).filter(
@@ -39,8 +39,8 @@ class TestEntrance(TestCase):
 
     def test_customer_in_the_store(self):
         # Given
-        pipeline_create_databases()
-        create_customer('A', 'B')
+        pipeline_create_databases_test()
+        create_customer(s, 'A', 'B')
         id_store = 1
         id_existing_customer = 1
         id_new_customer = s.query(Customer).count()
@@ -48,8 +48,8 @@ class TestEntrance(TestCase):
         s.close()
 
         # When
-        _ = customer_in_the_store(id_store, id_existing_customer)
-        _ = customer_in_the_store(id_store, id_new_customer)
+        _ = customer_in_the_store(s, id_store, id_existing_customer)
+        _ = customer_in_the_store(s, id_store, id_new_customer)
 
         # Then
         is_in_new_customer = s.query(IsInStore).filter(
@@ -78,8 +78,8 @@ class TestEntrance(TestCase):
         mock_create_customer.return_value = id_returned_create_function
 
         # When
-        _ = entrance(id_store, last_name, first_name, mail)
+        _ = entrance(s, id_store, last_name, first_name, mail)
 
         # Then
-        mock_create_customer.assert_called_once_with(last_name, first_name, mail)
-        mock_customer_in_store.assert_called_once_with(id_store, id_returned_create_function)
+        mock_create_customer.assert_called_once_with(s, last_name, first_name, mail)
+        mock_customer_in_store.assert_called_once_with(s, id_store, id_returned_create_function)

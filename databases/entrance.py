@@ -1,9 +1,8 @@
 from sqlalchemy import and_
-from databases.crud import s
 from databases.models import Customer, IsInStore
 
 
-def create_customer(last_name, first_name, mail=None):
+def create_customer(s, last_name, first_name, mail=None):
     """
     Check if the customer who enter is a new customer. In this case, a new customer is created in the Customer table.
 
@@ -30,7 +29,7 @@ def create_customer(last_name, first_name, mail=None):
     return id_customer
 
 
-def customer_in_the_store(id_store, id_customer):
+def customer_in_the_store(s, id_store, id_customer):
     """
     Change to true the is_in value for a given id_store and a given id_customer.
     Create a line in the IsInStore table if the couple (id_store, id_customer) does not exist
@@ -55,7 +54,7 @@ def customer_in_the_store(id_store, id_customer):
     s.close()
 
 
-def entrance(id_store, last_name, first_name, mail=None):
+def entrance(s, id_store, last_name, first_name, mail=None):
     """
     Orchestrate all changements in the database when a customer goes into a store. The fucntion returns the customer's
     id.
@@ -67,7 +66,7 @@ def entrance(id_store, last_name, first_name, mail=None):
     :return: The customer's id
     :rtype: int
     """
-    id_customer = create_customer(last_name, first_name, mail)
-    customer_in_the_store(id_store, id_customer)
+    id_customer = create_customer(s, last_name, first_name, mail)
+    customer_in_the_store(s, id_store, id_customer)
 
     return id_customer

@@ -1,8 +1,7 @@
-from databases.crud import s
 from databases.models import Store, Stock, Buying, HistoryCustomer, Product
 
 
-def get_stores():
+def get_stores(s):
     """
     Return all stores in the database.
 
@@ -14,7 +13,7 @@ def get_stores():
     return stores
 
 
-def get_products_in_store(id_store):
+def get_products_in_store(s, id_store):
     """
     Return all products for a store.
     The format is [(id_prod_1, name_prod_1, quantity_1), (id_prod_1, name_prod_1, quantity_1), ...]
@@ -31,7 +30,7 @@ def get_products_in_store(id_store):
     return products
 
 
-def get_products_in_buying_for_customer(id_store, id_customer):
+def get_products_in_buying_for_customer(s, id_store, id_customer):
     """
     Return all product for a store and a customer. It looks for the products in the Buying table.
 
@@ -49,7 +48,7 @@ def get_products_in_buying_for_customer(id_store, id_customer):
     return products
 
 
-def get_quantity_for_product_customer_in_buying(id_store, id_customer, id_product):
+def get_quantity_for_product_customer_in_buying(s, id_store, id_customer, id_product):
     """
     The quantity of the product corresponding to the id_product.
     If the product does not exist in the Buying table, the function returns 0.
@@ -72,7 +71,7 @@ def get_quantity_for_product_customer_in_buying(id_store, id_customer, id_produc
         return quantity[0]
 
 
-def get_available_product_for_customer(id_store, id_customer):
+def get_available_product_for_customer(s, id_store, id_customer):
     """
     Return all available products for the customer.
     A product is considered available if the customer has taken less product than there is in the storage.
@@ -83,16 +82,16 @@ def get_available_product_for_customer(id_store, id_customer):
     :rtype: list
     """
     available_product = []
-    product_stock = get_products_in_store(id_store)
+    product_stock = get_products_in_store(s, id_store)
     for id_product, name_product, quantity_product_stock in product_stock:
-        quantity_product_customer = get_quantity_for_product_customer_in_buying(id_store, id_customer, id_product)
+        quantity_product_customer = get_quantity_for_product_customer_in_buying(s, id_store, id_customer, id_product)
         if quantity_product_stock > quantity_product_customer:
             available_product.append((id_product, name_product, quantity_product_stock))
 
     return available_product
 
 
-def get_purchases_id_from_customer(id_customer, id_store, date_inf):
+def get_purchases_id_from_customer(s, id_customer, id_store, date_inf):
     """
     Return all purchases for a given customer and store. Return all products whom the customer buy after the date_inf.
     The format looks like : [(date_1, id_prod_1, quantity_1), (date_2, id_prod_2, quantity_2), ...]
@@ -113,7 +112,7 @@ def get_purchases_id_from_customer(id_customer, id_store, date_inf):
     return purchases
 
 
-def get_name_product_from_id_product(id_product):
+def get_name_product_from_id_product(s, id_product):
     """
     Return the name of the corresponding id product
 
@@ -128,7 +127,7 @@ def get_name_product_from_id_product(id_product):
     return name_product[0]
 
 
-def get_purchases_names_from_customer(id_customer, id_store, date_inf):
+def get_purchases_names_from_customer(s, id_customer, id_store, date_inf):
     """
     Return all purchases for a given customer and store. Return all products whom the customer buy after the date_inf.
     The format looks like : [(date_1, name_prod_1, quantity_1), (date_2, name_id_prod_2, quantity_2), ...]
@@ -139,9 +138,9 @@ def get_purchases_names_from_customer(id_customer, id_store, date_inf):
     :return: All purchases in HistoryCustomer table for the customer and the store
     :rtype: list
     """
-    purchases = get_purchases_id_from_customer(id_customer, id_store, date_inf)
+    purchases = get_purchases_id_from_customer(s, id_customer, id_store, date_inf)
     purchase_with_product_name = []
     for date_purchase, id_product, quantity in purchases:
-        name_product = get_name_product_from_id_product(id_product)
+        name_product = get_name_product_from_id_product(s, id_product)
         purchase_with_product_name.append((date_purchase, name_product, quantity))
     return purchase_with_product_name

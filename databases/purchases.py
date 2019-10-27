@@ -1,10 +1,9 @@
 from sqlalchemy import and_
 
-from databases.crud import s
 from databases.models import Product, Buying
 
 
-def find_id_product(name_product):
+def find_id_product(s, name_product):
     """
     Return the id and the unit_price of the detected product.
 
@@ -21,7 +20,7 @@ def find_id_product(name_product):
     return id_product[0]
 
 
-def new_buying(id_store, id_customer, id_product, name_product, unit_price):
+def new_buying(s, id_store, id_customer, id_product, name_product, unit_price):
     """
     Associate a product with a customer if he has never taken the product since he entered the store.
 
@@ -38,7 +37,7 @@ def new_buying(id_store, id_customer, id_product, name_product, unit_price):
     s.close()
 
 
-def same_buying(id_store, id_customer, id_product):
+def same_buying(s, id_store, id_customer, id_product):
     """
     Increase quantity of 1 for the product detected for the specified client.
 
@@ -59,7 +58,7 @@ def same_buying(id_store, id_customer, id_product):
     s.close()
 
 
-def put_product_in_store(id_store, id_customer, id_product):
+def put_product_in_store(s, id_store, id_customer, id_product):
     """
     Decrease quantity of 1 for the product detected for the specified client.
 
@@ -80,7 +79,7 @@ def put_product_in_store(id_store, id_customer, id_product):
     s.close()
 
 
-def take_product(id_store, id_customer, name_product):
+def take_product(s, id_store, id_customer, name_product):
     """
     Orchestrates all actions when a customer takes a product.
 
@@ -90,14 +89,14 @@ def take_product(id_store, id_customer, name_product):
     :param str brand: Brand of the detected product
     :return: None
     """
-    (id_product, unit_price) = find_id_product(name_product)
+    (id_product, unit_price) = find_id_product(s, name_product)
     try:
-        same_buying(id_store, id_customer, id_product)
+        same_buying(s, id_store, id_customer, id_product)
     except:
-        new_buying(id_store, id_customer, id_product, name_product, unit_price)
+        new_buying(s, id_store, id_customer, id_product, name_product, unit_price)
 
 
-def return_product(id_store, id_customer, name_product):
+def return_product(s, id_store, id_customer, name_product):
     """
         Orchestrates all actions when a customer returns a product.
 
@@ -107,5 +106,5 @@ def return_product(id_store, id_customer, name_product):
         :param str brand: Brand of the detected product
         :return:
     """
-    (id_product, _) = find_id_product(name_product)
-    put_product_in_store(id_store, id_customer, id_product)
+    (id_product, _) = find_id_product(s, name_product)
+    put_product_in_store(s, id_store, id_customer, id_product)
