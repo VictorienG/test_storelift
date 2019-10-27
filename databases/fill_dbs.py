@@ -53,7 +53,7 @@ fill_stock = [
         id_store=1,
         id_prod=1,
         name_product="Evian 50 cL",
-        quantity=8
+        quantity=2
     ),
     Stock(
         id_store=1,
@@ -71,7 +71,7 @@ fill_stock = [
         id_store=2,
         id_prod=2,
         name_product="Evian 1L",
-        quantity=6
+        quantity=1
     ),
     Stock(
         id_store=2,

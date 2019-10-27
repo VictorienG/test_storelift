@@ -5,8 +5,8 @@ from flask import Flask, render_template, request
 from databases.purchases import take_product, return_product
 from databases.entrance import entrance
 from databases.exit import leave_the_store
-from databases.get_data import get_stores, get_products_from_store, get_products_from_customer, \
-    get_purchases_from_customer
+from databases.get_data_for_api import get_stores, get_products_from_store, get_products_from_customer, \
+    get_purchases_id_from_customer, get_purchases_names_from_customer, get_available_product
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -17,7 +17,6 @@ global id_customer
 @app.route('/')
 def names():
     data = get_stores()
-    print("555", data)
     return render_template("names.html", data=data)
 
 
@@ -57,7 +56,7 @@ def buy_or_return_product():
 @app.route('/buy_purchases', methods=['GET', 'POST'])
 def buy_purchases():
     if request.method == 'POST':
-        data = get_products_from_store(id_store)
+        data = get_available_product(id_store, id_customer)
     return render_template("buy_purchases.html", data=data)
 
 
@@ -72,10 +71,9 @@ def exit():
     now = datetime.now()
     now = now.strftime("%d/%m/%Y %H:%M")
     data = leave_the_store(id_store, id_customer)
-    history = get_purchases_from_customer(id_customer, id_store, now)
+    history = get_purchases_names_from_customer(id_customer, id_store, now)
     print(history)
     return render_template("exit.html", data=data, history=history)
-
 
 
 if __name__ == "__main__":

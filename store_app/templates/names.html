@@ -1,23 +1,29 @@
-<form name="names" action="\first_purchases" method="POST", enctype="multipart/form-data">
+<form name="names" action="\first_purchases" method="POST" , enctype="multipart/form-data">
 
-<p>
-   Votre prénom :<br />
-   <input type="text" name="prenom" value="" />
-</p>
-<p>
-   Votre nom :<br />
-   <input type="text" name="nom" value="" />
-</p>
+    <p>
+        Votre prénom :<br/>
+        <input type="text" name="prenom" value=""/>
+    </p>
 
-<p>
-   Magasin :<br />
-   {% for store in data %}
-      <input type="radio" name="store" value="{{store[1]}}" /> {{store[0]}}
-   {% endfor %}
-</p>
+    <p>
+        Votre nom :<br/>
+        <input type="text" name="nom" value=""/>
+    </p>
 
-<p>
-   <input type="submit" value="Envoyer" />
-   <input type="reset" value="Annuler" />
-</p>
+    <p>
+        Votre mail :<br/>
+        <input type="email" name="mail" value=""/>
+    </p>
+
+    <p>
+        Magasin :<br/>
+        {% for store in data %}
+        <input type="radio" name="store" value="{{store[1]}}"/> {{store[0]}}
+        {% endfor %}
+    </p>
+
+    <p>
+        <input type="submit" value="Envoyer"/>
+        <input type="reset" value="Annuler"/>
+    </p>
 </form>
