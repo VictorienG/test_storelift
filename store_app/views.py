@@ -77,8 +77,6 @@ def exit():
     return render_template("exit.html", data=data, history=history)
 
 
-if __name__ == "__main__":
-    app.run()
 
 if __name__ == "__main__":
     app.run()
