@@ -85,7 +85,7 @@ class HistoryCustomer(Base):
     id_customer = Column(Integer, ForeignKey('customer.id_customer', ondelete='CASCADE'), primary_key=True)
     id_store = Column(Integer, ForeignKey('store.id_store', ondelete='CASCADE'), primary_key=True)
     id_prod = Column(Integer, ForeignKey('product.id_product', ondelete='SET NULL'), primary_key=True)
-    quantity = Column(Float)
+    quantity = Column(Integer)
 
     def __repr__(self):
         return "<HistoryCustomer( date={}, id_customer={}, id_store={}, id_prod={}, quantity={})>".format(

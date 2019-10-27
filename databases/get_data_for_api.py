@@ -10,10 +10,11 @@ def get_stores():
     :rtype: list
     """
     stores = s.query(Store).with_entities(Store.name_store, Store.id_store).all()
+    s.close()
     return stores
 
 
-def get_products_from_store(id_store):
+def get_products_in_store(id_store):
     """
     Return all products for a store.
     The format is [(id_prod_1, name_prod_1, quantity_1), (id_prod_1, name_prod_1, quantity_1), ...]
@@ -26,10 +27,11 @@ def get_products_from_store(id_store):
         Stock.id_store == id_store,
         Stock.quantity > 0,
     ).distinct().all()
+    s.close()
     return products
 
 
-def get_products_from_customer(id_store, id_customer):
+def get_products_in_buying_for_customer(id_store, id_customer):
     """
     Return all product for a store and a customer. It looks for the products in the Buying table.
 
@@ -43,27 +45,47 @@ def get_products_from_customer(id_store, id_customer):
         Buying.id_customer == id_customer,
         Buying.quantity > 0
     ).distinct().all()
+    s.close()
     return products
 
 
-def get_number_purchases(id_store, id_customer, id_product):
+def get_quantity_for_product_customer_in_buying(id_store, id_customer, id_product):
+    """
+    The quantity of the product corresponding to the id_product.
+    If the product does not exist in the Buying table, the function returns 0.
+
+    :param int id_store: The id of the store
+    :param int id_customer: The id of the customer
+    :param int id_product: The id of the product
+    :return: The quantity of the product corresponding to the id_product
+    :rtype: int
+    """
     quantity = s.query(Buying).with_entities(Buying.quantity).filter(
         Buying.id_store == id_store,
         Buying.id_customer == id_customer,
         Buying.id_prod == id_product
     ).first()
+    s.close()
     if quantity is None:
         return 0
     else:
         return quantity[0]
 
 
-def get_available_product(id_store, id_customer):
+def get_available_product_for_customer(id_store, id_customer):
+    """
+    Return all available products for the customer.
+    A product is considered available if the customer has taken less product than there is in the storage.
+
+    :param int id_store: The id of the store
+    :param int id_customer: The id of the customer
+    :return: The list of available products for the customer
+    :rtype: list
+    """
     available_product = []
-    product_customer = get_products_from_customer(id_store, id_customer)
-    product_stock = get_products_from_store(id_store)
+    product_stock = get_products_in_store(id_store)
     for id_product, name_product, quantity_product_stock in product_stock:
-        quantity_product_customer = get_number_purchases(id_store, id_customer, id_product)
+        quantity_product_customer = get_quantity_for_product_customer_in_buying(id_store, id_customer, id_product)
         if quantity_product_stock > quantity_product_customer:
             available_product.append((id_product, name_product, quantity_product_stock))
 
@@ -87,11 +109,11 @@ def get_purchases_id_from_customer(id_customer, id_store, date_inf):
         HistoryCustomer.id_store == id_store,
         HistoryCustomer.date >= date_inf,
     ).all()
-    print(purchases)
+    s.close()
     return purchases
 
 
-def get_name_product_from_id(id_product):
+def get_name_product_from_id_product(id_product):
     """
     Return the name of the corresponding id product
 
@@ -102,6 +124,7 @@ def get_name_product_from_id(id_product):
     name_product = s.query(Product).with_entities(Product.name).filter(
         Product.id_product == id_product
     ).first()
+    s.close()
     return name_product[0]
 
 
@@ -119,6 +142,6 @@ def get_purchases_names_from_customer(id_customer, id_store, date_inf):
     purchases = get_purchases_id_from_customer(id_customer, id_store, date_inf)
     purchase_with_product_name = []
     for date_purchase, id_product, quantity in purchases:
-        name_product = get_name_product_from_id(id_product)
+        name_product = get_name_product_from_id_product(id_product)
         purchase_with_product_name.append((date_purchase, name_product, quantity))
     return purchase_with_product_name

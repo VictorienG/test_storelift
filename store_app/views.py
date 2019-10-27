@@ -5,8 +5,8 @@ from flask import Flask, render_template, request
 from databases.purchases import take_product, return_product
 from databases.entrance import entrance
 from databases.exit import leave_the_store
-from databases.get_data_for_api import get_stores, get_products_from_store, get_products_from_customer, \
-    get_purchases_id_from_customer, get_purchases_names_from_customer, get_available_product
+from databases.get_data_for_api import get_stores, get_products_in_store, get_products_in_buying_for_customer, \
+    get_purchases_id_from_customer, get_purchases_names_from_customer, get_available_product_for_customer
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -28,7 +28,7 @@ def buy_a_product():
         global id_store, id_customer
         id_store = request.form.get('store')
         id_customer = entrance(id_store, nom, prenom)
-        data = get_products_from_store(id_store)
+        data = get_products_in_store(id_store)
 
     return render_template("first_purchases.html", data=data)
 
@@ -49,20 +49,20 @@ def buy_or_return_product():
             product = request.form.get("produit")
             print("retour !!!")
             return_product(id_store, id_customer, product)
-    data = get_products_from_customer(id_store, id_customer)
+    data = get_products_in_buying_for_customer(id_store, id_customer)
     return render_template("buy_or_return_purchases.html", data = data)
 
 
 @app.route('/buy_purchases', methods=['GET', 'POST'])
 def buy_purchases():
     if request.method == 'POST':
-        data = get_available_product(id_store, id_customer)
+        data = get_available_product_for_customer(id_store, id_customer)
     return render_template("buy_purchases.html", data=data)
 
 
 @app.route('/return_purchases', methods=['GET', 'POST'])
 def return_products():
-    data = get_products_from_customer(id_store, id_customer)
+    data = get_products_in_buying_for_customer(id_store, id_customer)
     return render_template("return_purchases.html", data=data)
 
 

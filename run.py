@@ -4,14 +4,20 @@ from databases import crud
 from databases.crud import s
 from databases.entrance import entrance
 from databases.exit import leave_the_store
-from databases.get_data_for_api import get_name_product_from_id, get_purchases_id_from_customer, \
-    get_purchases_names_from_customer
+from databases.get_data_for_api import get_name_product_from_id_product, get_purchases_id_from_customer, \
+    get_purchases_names_from_customer, get_quantity_for_product_customer_in_buying
 from databases.purchases import take_product, return_product
 from store_app import app
 
 if __name__ == "__main__":
     crud.pipeline_create_databases()
-    app.run(debug=True)
+    #app.run(debug=True)
+
+
+    id_store = 2
+    id_customer = entrance(id_store, "Gimenez", "Victorien")
+    take_product(id_store, id_customer, "evian 1l")
+    print(get_quantity_for_product_customer_in_buying(id_store, id_customer, 2))
 
     """ id_store_1 = 1
     id_store_2 = 2
