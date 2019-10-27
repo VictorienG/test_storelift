@@ -1,1 +1,28 @@
-"sortie"
+Merci ! Le prix de vos course est de {{data}}
+
+<table>
+    <tr>
+        <td>
+            Date
+        </td>
+        <td>
+            Produit
+        </td>
+        <td>
+            quantité
+        </td>
+
+    </tr>
+
+    {% for items in history %}
+    <tr>
+        {% for item in range(items|length) %}
+            <td>
+                {{items[item]}}
+            </td>
+
+        {% endfor %}
+
+    </tr>
+    {% endfor %}
+</table>

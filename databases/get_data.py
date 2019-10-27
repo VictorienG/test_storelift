@@ -1,5 +1,5 @@
 from databases.crud import s
-from databases.models import Store, Stock, Buying
+from databases.models import Store, Stock, Buying, HistoryCustomer
 
 
 def get_stores():
@@ -44,3 +44,14 @@ def get_products_from_customer(id_store, id_customer):
         Buying.quantity > 0
     ).distinct().all()
     return products
+
+
+def get_purchases_from_customer(id_customer, id_store, date_inf):
+    purchases = s.query(HistoryCustomer).with_entities(HistoryCustomer.date, HistoryCustomer.id_prod,
+                                                       HistoryCustomer.quantity).filter(
+        HistoryCustomer.id_customer == id_customer,
+        HistoryCustomer.id_store == id_store,
+        HistoryCustomer.date >= date_inf,
+    ).all()
+    print(purchases)
+    return purchases

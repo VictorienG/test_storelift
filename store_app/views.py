@@ -1,9 +1,12 @@
+from datetime import datetime
+
 from flask import Flask, render_template, request
 
 from databases.purchases import take_product, return_product
 from databases.entrance import entrance
 from databases.exit import leave_the_store
-from databases.get_data import get_stores, get_products_from_store, get_products_from_customer
+from databases.get_data import get_stores, get_products_from_store, get_products_from_customer, \
+    get_purchases_from_customer
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -66,8 +69,12 @@ def return_products():
 
 @app.route('/exit', methods=['GET', 'POST'])
 def exit():
+    now = datetime.now()
+    now = now.strftime("%d/%m/%Y %H:%M")
     data = leave_the_store(id_store, id_customer)
-    return render_template("exit.html", data=data)
+    history = get_purchases_from_customer(id_customer, id_store, now)
+    print(history)
+    return render_template("exit.html", data=data, history=history)
 
 
 if __name__ == "__main__":
