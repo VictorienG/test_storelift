@@ -49,8 +49,8 @@ def buy_or_return_product():
             product = request.form.get("produit")
             print("retour !!!")
             return_product(id_store, id_customer, product)
-
-    return render_template("buy_or_return_purchases.html")
+    data = get_products_from_customer(id_store, id_customer)
+    return render_template("buy_or_return_purchases.html", data = data)
 
 
 @app.route('/buy_purchases', methods=['GET', 'POST'])

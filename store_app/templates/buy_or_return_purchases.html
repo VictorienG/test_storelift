@@ -8,6 +8,30 @@
 </head>
 <body>
 <div class="container">
+    <form id="contact" name="buy_products" action="" method="POST" ,
+          enctype="multipart/form-data">
+        <h3> Voici votre panier</h3>
+
+
+        <table>
+            <tr>
+                <td> id produit</td>
+                <td> Produit</td>
+                <td> Quantité</td>
+            </tr>
+            {% for items in data %}
+            <tr>
+                {% for item in range(items|length) %}
+                <td>
+                    {{items[item]}}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+
+
     <form name="to_buy_products" action="\buy_purchases" method="POST" , enctype="multipart/form-data">
         <input type="submit" value="Acheter un produit"/>
     </form>
@@ -18,7 +42,7 @@
     </form>
 
     <form name="to_exit" action="\exit" method="POST" , enctype="multipart/form-data">
-        <input type="submit" value="sortir"/>
+        <input type="submit" value="Sortir"/>
     </form>
 </div>
 

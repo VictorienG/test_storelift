@@ -132,13 +132,15 @@ table {
  vertical-align:middle;
  border-style:solid;
  border-color:black;
- width:80%;
+ width:100%;
  }
 td {
  border-width:1px;
  border-style:solid;
- width:80%;
+ width:60%;
+ text-align: left;
  }
+
 
 
 .copyright {

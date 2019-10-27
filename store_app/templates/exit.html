@@ -13,27 +13,24 @@
         <h3>Storelift</h3>
         <h4> Merci ! Le prix de vos courses est de {{data}}€ </h4>
         <fieldset>
-            <table>
+            <table >
                 <tr>
                     <td> Date</td>
                     <td> Produit</td>
                     <td> quantité</td>
                 </tr>
-
                 {% for items in history %}
                 <tr>
                     {% for item in range(items|length) %}
                     <td>
                         {{items[item]}}
                     </td>
-
                     {% endfor %}
-
                 </tr>
                 {% endfor %}
             </table>
         </fieldset>
-        </p>
+
     </form>
 </div>
 
