@@ -37,6 +37,9 @@ class TestExit(TestCase):
 
     def test_compute_total_price(self):
         # Given
+        s.close()
+        pipeline_create_databases_test()
+
         id_store = 2
         id_customer = entrance(s, id_store, "Gimenez", "Victorien")
         take_product(s, id_store, id_customer, "evian 1l")
@@ -51,8 +54,9 @@ class TestExit(TestCase):
         # When
         total_price, products_bought = compute_total_price(s, id_store, id_customer)
         s.close()
+
         # Then
-        self.assertEqual(expected_total_price, total_price)
+        self.assertEqual(float(expected_total_price), float(total_price))
         self.assertListEqual(expected_products_bought, products_bought)
 
     def test_put_in_history(self):

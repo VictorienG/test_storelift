@@ -1,3 +1,4 @@
+# !!!! le build de l'image n'a pas été testé !!!! Avec windows c'est horrible docker
 FROM ubuntu:xenial
 
 LABEL maintainer="Victorien-Maxence Gimenez"

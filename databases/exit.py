@@ -74,12 +74,11 @@ def put_in_history(s, id_store, id_customer):
                                     quantity=quantity)
         s.add(purchases)
         s.commit()
-    s.close
 
 
 def delete_purchases_customer(s, id_store, id_customer):
     """
-    Delete all lines in the buying table for the (id_store, id_customer) table
+    Delete all lines in the buying table for the (id_store, id_customer) table.
 
     :param s: The database session
     :param int id_store: The id of the store

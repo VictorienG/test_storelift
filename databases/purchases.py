@@ -9,14 +9,12 @@ def find_id_product(s, name_product):
 
     :param s: The database session
     :param str name_product: Name of the detected product
-    :param str brand: Brand of the detected product
     :return: The id of the detected product
     :rtype: tuple
     """
     id_product = s.query(Product).with_entities(Product.id_product, Product.unit_price).filter(
         Product.name.ilike(name_product)
     ).all()
-    s.close
 
     return id_product[0]
 
@@ -27,9 +25,10 @@ def new_buying(s, id_store, id_customer, id_product, name_product, unit_price):
 
     :param s: The database session
     :param int id_store: The id of the store where the customer is entered
-    :param int id_customer: The id of the customer.
-    :param int id_product: The id of the detected product. The output of the find_id_product function.
-    :param float unit_price: The unit price of the detected product. The output of the find_id_product function.
+    :param int id_customer: The id of the customer
+    :param int id_product: The id of the detected product. The output of the find_id_product function
+    :param str name_product: The name of the product
+    :param float unit_price: The unit price of the detected product. The output of the find_id_product function
     :return: None
     """
     customer_buy_product = Buying(id_store=id_store, id_customer=id_customer, id_prod=id_product,
@@ -109,7 +108,6 @@ def return_product(s, id_store, id_customer, name_product):
     :param int id_store: The id of the store where the customer is entered
     :param int id_customer: The id of the customer.
     :param str name_product: Name of the detected product
-    :param str brand: Brand of the detected product
     :return:
     """
     (id_product, _) = find_id_product(s, name_product)

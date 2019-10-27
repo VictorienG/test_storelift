@@ -17,7 +17,7 @@ def get_stores(s):
 def get_products_in_store(s, id_store):
     """
     Return all products for a store.
-    The format is [(id_prod_1, name_prod_1, quantity_1), (id_prod_1, name_prod_1, quantity_1), ...]
+    The format is [(id_prod_1, name_prod_1, quantity_1), (id_prod_1, name_prod_1, quantity_1), ...].
 
     :param s: The database session
     :param int id_store: The id of the store where are products
