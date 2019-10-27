@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from config import DATABASE_URI, DATABASE_URI_TEST
+from config import DATABASE_URI_TEST
 from databases.fill_dbs import fill_store, fill_customer, fill_product, fill_stock, fill_is_in_store
 from databases.models import Base
 
