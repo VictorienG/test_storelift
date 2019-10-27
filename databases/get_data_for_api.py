@@ -5,6 +5,7 @@ def get_stores(s):
     """
     Return all stores in the database.
 
+    :param s: The database session
     :return: All stores in the database
     :rtype: list
     """
@@ -18,6 +19,7 @@ def get_products_in_store(s, id_store):
     Return all products for a store.
     The format is [(id_prod_1, name_prod_1, quantity_1), (id_prod_1, name_prod_1, quantity_1), ...]
 
+    :param s: The database session
     :param int id_store: The id of the store where are products
     :return: All product for a store
     :rtype: list
@@ -34,6 +36,7 @@ def get_products_in_buying_for_customer(s, id_store, id_customer):
     """
     Return all product for a store and a customer. It looks for the products in the Buying table.
 
+    :param s: The database session
     :param int id_store: The id of the store
     :param int id_customer: The id of the customer
     :return: All products that the customer wants to buy
@@ -53,6 +56,7 @@ def get_quantity_for_product_customer_in_buying(s, id_store, id_customer, id_pro
     The quantity of the product corresponding to the id_product.
     If the product does not exist in the Buying table, the function returns 0.
 
+    :param s: The database session
     :param int id_store: The id of the store
     :param int id_customer: The id of the customer
     :param int id_product: The id of the product
@@ -76,6 +80,7 @@ def get_available_product_for_customer(s, id_store, id_customer):
     Return all available products for the customer.
     A product is considered available if the customer has taken less product than there is in the storage.
 
+    :param s: The database session
     :param int id_store: The id of the store
     :param int id_customer: The id of the customer
     :return: The list of available products for the customer
@@ -96,6 +101,7 @@ def get_purchases_id_from_customer(s, id_customer, id_store, date_inf):
     Return all purchases for a given customer and store. Return all products whom the customer buy after the date_inf.
     The format looks like : [(date_1, id_prod_1, quantity_1), (date_2, id_prod_2, quantity_2), ...]
 
+    :param s: The database session
     :param int id_customer: The id of the customer
     :param int id_store: The id of the store
     :param datetime date_inf: The date to filter the purchases
@@ -116,6 +122,7 @@ def get_name_product_from_id_product(s, id_product):
     """
     Return the name of the corresponding id product
 
+    :param s: The database session
     :param int id_product: The id of the product
     :return: The name of the product
     :rtype: str
@@ -132,6 +139,7 @@ def get_purchases_names_from_customer(s, id_customer, id_store, date_inf):
     Return all purchases for a given customer and store. Return all products whom the customer buy after the date_inf.
     The format looks like : [(date_1, name_prod_1, quantity_1), (date_2, name_id_prod_2, quantity_2), ...]
 
+    :param s: The database session
     :param int id_customer: The id of the customer
     :param int id_store: The id of the store
     :param datetime date_inf: The date to filter the purchases

@@ -7,6 +7,7 @@ def find_id_product(s, name_product):
     """
     Return the id and the unit_price of the detected product.
 
+    :param s: The database session
     :param str name_product: Name of the detected product
     :param str brand: Brand of the detected product
     :return: The id of the detected product
@@ -24,6 +25,7 @@ def new_buying(s, id_store, id_customer, id_product, name_product, unit_price):
     """
     Associate a product with a customer if he has never taken the product since he entered the store.
 
+    :param s: The database session
     :param int id_store: The id of the store where the customer is entered
     :param int id_customer: The id of the customer.
     :param int id_product: The id of the detected product. The output of the find_id_product function.
@@ -41,6 +43,7 @@ def same_buying(s, id_store, id_customer, id_product):
     """
     Increase quantity of 1 for the product detected for the specified client.
 
+    :param s: The database session
     :param int id_store: The id of the store where the customer is entered
     :param int id_customer: The id of the customer.
     :param int id_product: The id of the detected product. The output of the find_id_product function.
@@ -62,6 +65,7 @@ def put_product_in_store(s, id_store, id_customer, id_product):
     """
     Decrease quantity of 1 for the product detected for the specified client.
 
+    :param s: The database session
     :param int id_store: The id of the store where the customer is entered
     :param int id_customer: The id of the customer.
     :param int id_product: The id of the detected product. The output of the find_id_product function.
@@ -83,6 +87,7 @@ def take_product(s, id_store, id_customer, name_product):
     """
     Orchestrates all actions when a customer takes a product.
 
+    :param s: The database session
     :param int id_store: The id of the store where the customer is entered
     :param int id_customer: The id of the customer.
     :param str name_product: Name of the detected product
@@ -98,13 +103,14 @@ def take_product(s, id_store, id_customer, name_product):
 
 def return_product(s, id_store, id_customer, name_product):
     """
-        Orchestrates all actions when a customer returns a product.
+    Orchestrates all actions when a customer returns a product.
 
-        :param int id_store: The id of the store where the customer is entered
-        :param int id_customer: The id of the customer.
-        :param str name_product: Name of the detected product
-        :param str brand: Brand of the detected product
-        :return:
+    :param s: The database session
+    :param int id_store: The id of the store where the customer is entered
+    :param int id_customer: The id of the customer.
+    :param str name_product: Name of the detected product
+    :param str brand: Brand of the detected product
+    :return:
     """
     (id_product, _) = find_id_product(s, name_product)
     put_product_in_store(s, id_store, id_customer, id_product)

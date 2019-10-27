@@ -6,6 +6,7 @@ def create_customer(s, last_name, first_name, mail=None):
     """
     Check if the customer who enter is a new customer. In this case, a new customer is created in the Customer table.
 
+    :param s: The database session
     :param str last_name: The last_name of the customer
     :param str first_name:  The customer's last name
     :param str mail: The mail of the customer
@@ -34,6 +35,7 @@ def customer_in_the_store(s, id_store, id_customer):
     Change to true the is_in value for a given id_store and a given id_customer.
     Create a line in the IsInStore table if the couple (id_store, id_customer) does not exist
 
+    :param s: The database session
     :param int id_store: The id of the store
     :param int id_customer: The id of the customer who enters in the store
     :return: None
@@ -59,6 +61,7 @@ def entrance(s, id_store, last_name, first_name, mail=None):
     Orchestrate all changements in the database when a customer goes into a store. The fucntion returns the customer's
     id.
 
+    :param s: The database session
     :param int id_store: The id of the store
     :param str last_name: The last_name of the customer
     :param str first_name:  The customer's last name
