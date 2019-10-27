@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Victorien Gimenez">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>Test Storelift</title>
+</head>
+<body>
+<div class="container">
+    <form id="contact" name="buy_products" action="" method="POST" ,
+          enctype="multipart/form-data">
+        <h3>Storelift</h3>
+        <h4> Merci ! Le prix de vos courses est de {{data}}€ </h4>
+        <fieldset>
+            <table >
+                <tr>
+                    <td> Date</td>
+                    <td> Produit</td>
+                    <td> quantité</td>
+                </tr>
+                {% for items in history %}
+                <tr>
+                    {% for item in range(items|length) %}
+                    <td>
+                        {{items[item]}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </form>
+</div>
+
+
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Victorien Gimenez">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>Test Storelift</title>
+</head>
+<body>
+<div class="container">
+    <form id="contact" name="buy_products" action="" method="POST" , enctype="multipart/form-data">
+        <h3> Voici votre panier</h3>
+
+
+        <table>
+            <tr>
+                <td> id produit</td>
+                <td> Produit</td>
+                <td> Quantité</td>
+            </tr>
+            {% for items in data %}
+            <tr>
+                {% for item in range(items|length) %}
+                <td>
+                    {{items[item]}}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+
+
+    <form name="to_buy_products" action="\buy_purchases" method="POST" , enctype="multipart/form-data">
+        <input type="submit" value="Acheter un produit"/>
+    </form>
+
+    <form name="to_return_products" action="\return_purchases" method="POST" , enctype="multipart/form-data">
+        <input type="submit" value="Retourner un produit"/>
+
+    </form>
+
+    <form name="to_exit" action="\exit" method="POST" , enctype="multipart/form-data">
+        <input type="submit" value="Sortir"/>
+    </form>
+</div>
+
+
+</body>
+</html>
+
+
+
+
+
+
